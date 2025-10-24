@@ -57,7 +57,7 @@ class PikidropApp {
         document.getElementById('userName').textContent = user.displayName || user.email;
         document.getElementById('userAvatar').textContent = (user.displayName || user.email).charAt(0).toUpperCase();
         
-        // Check if user is a driver
+        // Check if user is a driver or admin
         try {
             const userRef = ref(this.database, 'users/' + user.uid);
             const snapshot = await get(userRef);
@@ -65,6 +65,8 @@ class PikidropApp {
                 const userData = snapshot.val();
                 if (userData.role === 'driver') {
                     this.loadPage('driverDashboard');
+                } else if (userData.role === 'admin') {
+                    this.loadPage('adminDashboard');
                 }
             }
         } catch (error) {

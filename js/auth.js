@@ -35,6 +35,7 @@ class AuthManager {
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         const isDriver = document.getElementById('loginAsDriver').checked;
+        const isAdmin = document.getElementById('loginAsAdmin').checked;
         const errorDiv = document.getElementById('loginError');
 
         // Clear previous errors
@@ -51,12 +52,19 @@ class AuthManager {
             // Sign in user
             const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
             
-            // Check user role if logging in as driver
+            // Check user role if logging in as driver or admin
             const userRef = ref(this.database, 'users/' + userCredential.user.uid);
             const snapshot = await get(userRef);
             
             if (snapshot.exists()) {
                 const userData = snapshot.val();
+                
+                // Verify admin role
+                if (isAdmin && userData.role !== 'admin') {
+                    this.showLoginError('This account is not registered as an admin. Please uncheck "Login as Admin".');
+                    await this.auth.signOut();
+                    return;
+                }
                 
                 // Verify driver role if driver login is selected
                 if (isDriver && userData.role !== 'driver') {
@@ -66,8 +74,8 @@ class AuthManager {
                 }
                 
                 // Verify user role if regular user login
-                if (!isDriver && userData.role === 'driver') {
-                    this.showLoginError('This is a driver account. Please check "Login as Driver" to continue.');
+                if (!isDriver && !isAdmin && userData.role !== 'user') {
+                    this.showLoginError(`This is a ${userData.role} account. Please check the appropriate box to continue.`);
                     await this.auth.signOut();
                     return;
                 }
@@ -77,8 +85,10 @@ class AuthManager {
             window.app.closeAuthModal();
             window.app.showSuccess('Login successful! Welcome back.');
             
-            // Redirect driver to dashboard
-            if (isDriver) {
+            // Redirect based on role
+            if (isAdmin) {
+                window.app.loadPage('adminDashboard');
+            } else if (isDriver) {
                 window.app.loadPage('driverDashboard');
             } else {
                 window.app.showHome();

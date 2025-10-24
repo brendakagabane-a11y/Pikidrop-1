@@ -12,7 +12,8 @@ export const pages = {
     trackDelivery: './pages/tracking.js',
     storeGoods: './pages/storage.js',
     becomeTransporter: './pages/transporter.js',
-    driverDashboard: './pages/driver-dashboard.js'
+    driverDashboard: './pages/driver-dashboard.js',
+    adminDashboard: './pages/admin-dashboard.js'
 };
 
 // Page titles for SEO and display
@@ -22,7 +23,8 @@ export const pageTitles = {
     trackDelivery: 'Track Delivery - Pikidrop',
     storeGoods: 'Store Goods - Pikidrop',
     becomeTransporter: 'Become a Transporter - Pikidrop',
-    driverDashboard: 'Driver Dashboard - Pikidrop'
+    driverDashboard: 'Driver Dashboard - Pikidrop',
+    adminDashboard: 'Admin Dashboard - Pikidrop'
 };
 
 // Update document title

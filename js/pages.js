@@ -7,13 +7,13 @@
 // Each page is loaded dynamically when needed
 
 export const pages = {
-    home: './pages/home.js',
-    bookDelivery: './pages/booking.js',
-    trackDelivery: './pages/tracking.js',
-    storeGoods: './pages/storage.js',
-    becomeTransporter: './pages/transporter.js',
-    driverDashboard: './pages/driver-dashboard.js',
-    adminDashboard: './pages/admin-dashboard.js'
+    home: './js/pages/home.js',
+    bookDelivery: './js/pages/bookings.js',
+    trackDelivery: './js/pages/tracking.js',
+    storeGoods: './js/pages/storage.js',
+    becomeTransporter: './js/pages/transporter.js',
+    driverDashboard: './js/pages/driver-dashboard.js',
+    adminDashboard: './js/pages/admin-dashboard.js'
 };
 
 // Page titles for SEO and display
